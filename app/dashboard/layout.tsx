@@ -10,7 +10,7 @@ export default function RootLayout({
   return (
     <SidebarProvider defaultOpen={false}>
    <AppSidebar/>
-      <main>
+      <main className="w-full" suppressHydrationWarning>
         <SidebarTrigger/>
         {children}
       </main>
