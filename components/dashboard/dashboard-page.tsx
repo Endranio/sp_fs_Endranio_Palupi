@@ -25,7 +25,6 @@ const data = [
 export default function DashboardPage(){
     return(
             <div>
-
         <div className="w-full flex justify-between ">
             <div>
 
@@ -35,8 +34,6 @@ export default function DashboardPage(){
             <CreateProject
             trigger={<Button> + New Project</Button>}
             />
-            
-
         </div>
        <div className="grid md:grid-cols-3 gap-20 mt-15">
         {data.map((project: ProjectDTO) => (
