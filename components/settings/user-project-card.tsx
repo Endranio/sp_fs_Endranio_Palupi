@@ -2,7 +2,7 @@ import { UserProjectDTO } from "@/schema/user-schema";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 import { Trash2 } from "lucide-react";
-import { Button } from "../ui/button";
+
 import { Badge } from "../ui/badge";
 
 export default function UserProject(userProject:UserProjectDTO){

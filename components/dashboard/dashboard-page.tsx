@@ -2,6 +2,8 @@ import { ProjectDTO } from "@/schema/project-schema";
 import { Button } from "../ui/button";
 import ProjectCard from "../utils/project-card";
 import { CreateProject } from "../utils/create-project";
+
+
 const data = [
   {
     id: "1",
@@ -23,6 +25,9 @@ const data = [
   },
 ]
 export default function DashboardPage(){
+
+  // const {data,isPending} = UseGetProject()
+
     return(
             <div>
         <div className="w-full flex justify-between ">
