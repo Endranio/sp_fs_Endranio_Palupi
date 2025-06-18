@@ -9,9 +9,10 @@ import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import { api } from "@/lib/api";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/storage/auth";
 
 export default function UseLogin(){
-      const {
+  const {
     register,
     handleSubmit,
     formState: { errors },
@@ -23,15 +24,18 @@ export default function UseLogin(){
 
     const router = useRouter();
 
+    const {setUser} = useAuthStore()
+
  const { mutateAsync, isPending } = useMutation({
     mutationKey: ["login"],
     mutationFn: async (data: LoginDTO) => {
       
       const res = await api.post("/auth/login", data);
       console.log(res.data.token)
-      Cookies.set("token", res.data.token, {
+      Cookies.set("token", res.data.data.token, {
         expires: 1,
       });
+      setUser(res.data.data.user)
       return res.data;
     },
     onError: (error) => {

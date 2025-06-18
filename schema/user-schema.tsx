@@ -1,14 +1,33 @@
+import { z } from "zod";
 
-import {z} from 'zod'
+export const MemberUserSchema = z.object({
+  email: z.string().email(),
+  username: z.string(),
+});
 
-export const UserProjectSchema = z.object({
-    id:z.string().optional(),
-    name:z.string().min(1),
-    email:z.string().email(),
-    initials:z.string().optional(),
-    ownerId:z.string().optional(),
-    role:z.string().optional()
-   
+export const MemberSchemaDTO = z.object({
+  id: z.string().uuid(),
+  userId: z.string().uuid(),
+  projectId: z.string().uuid(),
+  role: z.enum(["Owner", "Member"]),
+  user: MemberUserSchema,
+});
+
+
+
+export type MemberDTO = z.infer<typeof MemberSchemaDTO>
+
+export const MemberSchemaDTO2 = z.object({
+  id: z.string().uuid(),
+  username: z.string(),
+  email: z.string().email(),
+});
+
+
+
+export type MemberDTO2 = z.infer<typeof MemberSchemaDTO2>
+
+export const addMemberSchema = z.object({
+    userId:z.string().uuid()
 })
-
-export type UserProjectDTO = z.infer<typeof UserProjectSchema>
+export type addMemberDTO = z.infer<typeof addMemberSchema>

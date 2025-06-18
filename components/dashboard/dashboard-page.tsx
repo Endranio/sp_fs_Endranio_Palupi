@@ -1,32 +1,20 @@
+"use client"
+
 import { ProjectDTO } from "@/schema/project-schema";
 import { Button } from "../ui/button";
 import ProjectCard from "../utils/project-card";
-import { CreateProject } from "../utils/create-project";
+import { CreateProject } from "./create-project";
+import UseGetProject from "./hooks/dashboard-hook";
+import Spinner from "../ui/spinner";
 
 
-const data = [
-  {
-    id: "1",
-    name: "Website Redesign",
-    description: "Complete overhaul of the company website with modern design",
-    
-  },
-  {
-    id: "2",
-    name: "Mobile App",
-    description: "Native mobile application for iOS and Android",
-    
-  },
-  {
-    id: "3",
-    name: "Marketing Campaign",
-    description: "Q1 marketing campaign for product launch",
-    
-  },
-]
 export default function DashboardPage(){
 
-  // const {data,isPending} = UseGetProject()
+  const {data,isPending} = UseGetProject()
+  
+  if(isPending){
+    <Spinner/>
+  }
 
     return(
             <div>
@@ -41,7 +29,7 @@ export default function DashboardPage(){
             />
         </div>
        <div className="grid md:grid-cols-3 gap-20 mt-15">
-        {data.map((project: ProjectDTO) => (
+        {data?.map((project: ProjectDTO) => (
           <div className="border rounded-xl h-full  p-4 " key={project.id}>
             <ProjectCard {...project} />
           </div>
