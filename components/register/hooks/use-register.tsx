@@ -1,14 +1,14 @@
 import { api } from "@/lib/api";
 import { RegisterDTO, RegisterSchema } from "@/schema/auth-schema";
-import { zodResolver } from '@hookform/resolvers/zod';
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-export default function UseRegister(){
-      const {
+export default function UseRegister() {
+  const {
     register,
     handleSubmit,
     formState: { errors },
@@ -16,15 +16,12 @@ export default function UseRegister(){
     mode: "onChange",
     resolver: zodResolver(RegisterSchema),
   });
- 
 
-
-      const router = useRouter();
+  const router = useRouter();
 
   const { mutateAsync, isPending } = useMutation({
     mutationKey: ["register"],
     mutationFn: async (data: RegisterDTO) => {
-      
       const res = await api.post("/auth/register", data);
       return res.data;
     },
@@ -40,10 +37,13 @@ export default function UseRegister(){
     },
   });
 
-  const onSubmit = handleSubmit( async(data: RegisterDTO) => {
-   await mutateAsync(data);
+  const onSubmit = handleSubmit(async (data: RegisterDTO) => {
+    await mutateAsync(data);
   });
-  return{
-    register,errors,onSubmit,isPending
-  }
+  return {
+    register,
+    errors,
+    onSubmit,
+    isPending,
+  };
 }

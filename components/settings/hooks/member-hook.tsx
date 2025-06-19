@@ -1,6 +1,6 @@
- "use client"
+"use client";
 
- import { api } from "@/lib/api";
+import { api } from "@/lib/api";
 import { DeleteDTO, DeleteSchema } from "@/schema/auth-schema";
 import { addMemberDTO, addMemberSchema } from "@/schema/user-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,31 +11,28 @@ import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
+export default function UseMember() {
+  const { id } = useParams();
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const { data } = useQuery({
+    queryKey: ["member"],
+    queryFn: async () => {
+      const res = await api.get(`/member/exist/${id}`);
 
+      return res.data;
+    },
+  });
 
- export default function UseMember(){
-     
-     const {id} = useParams()
-     const closeRef = useRef<HTMLButtonElement>(null);
-      const { data } = useQuery({
-        queryKey: ["member"],
-        queryFn: async () => {
-          const res = await api.get(`/member/exist/${id}`);
- 
-          return res.data;
-        },
-    });
+  const { data: available } = useQuery({
+    queryKey: ["add-member"],
+    queryFn: async () => {
+      const res = await api.get(`/member/${id}`);
+      console.log(res.data, "data");
+      return res.data;
+    },
+  });
 
-     const { data:available} = useQuery({
-        queryKey: ["add-member"],
-        queryFn: async () => {
-          const res = await api.get(`/member/${id}`);
-    console.log(res.data,"data")
-          return res.data;
-        },
-    });
-
-     const {
+  const {
     control,
     reset,
     handleSubmit,
@@ -43,52 +40,45 @@ import { toast } from "sonner";
   } = useForm<addMemberDTO>({
     mode: "onChange",
     resolver: zodResolver(addMemberSchema),
-  })
-
+  });
 
   const queryClient = useQueryClient();
-    const { mutateAsync, isPending } = useMutation<any, Error, addMemberDTO>({
-      mutationKey: ["add-member"],
-      mutationFn: async (data: addMemberDTO) => {
-        
-        
-        const response = await api.post(`/member/${id}`, data);
-        return response.data;
-      },
-      onError: (error) => {
-        if (axios.isAxiosError(error)) {
-          return toast.error(error.response?.data.message);
-        }
-  
-        toast.error("something wrong");
-      },
-      onSuccess: async (data) => {
-        await queryClient.invalidateQueries({
-          queryKey: ["member"],
-        });
-      
-        toast.success(data.message);
-        closeRef.current?.click();
-        reset();
-      },
-    });
-  
-   
+  const { mutateAsync, isPending } = useMutation<any, Error, addMemberDTO>({
+    mutationKey: ["add-member"],
+    mutationFn: async (data: addMemberDTO) => {
+      const response = await api.post(`/member/${id}`, data);
+      return response.data;
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        return toast.error(error.response?.data.message);
+      }
 
-  const onSubmit = async(data: addMemberDTO) => {
-   await mutateAsync(data)
-  }
+      toast.error("something wrong");
+    },
+    onSuccess: async (data) => {
+      await queryClient.invalidateQueries({
+        queryKey: ["member"],
+      });
 
-    return{
-        data,
-        available,
-        control,
-        handleSubmit,
-        onSubmit,
-        errors,
-        closeRef,
-        isPending
+      toast.success(data.message);
+      closeRef.current?.click();
+      reset();
+    },
+  });
 
-    }
+  const onSubmit = async (data: addMemberDTO) => {
+    await mutateAsync(data);
+  };
 
- }
+  return {
+    data,
+    available,
+    control,
+    handleSubmit,
+    onSubmit,
+    errors,
+    closeRef,
+    isPending,
+  };
+}

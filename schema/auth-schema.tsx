@@ -1,25 +1,22 @@
-
-import {z} from 'zod'
+import { z } from "zod";
 
 export const LoginSchema = z.object({
-    email:z.string().email(),
-    password:z.string().min(6)
-   
-})
+  email: z.string().email(),
+  password: z.string().min(6),
+});
 
-export type LoginDTO = z.infer<typeof LoginSchema>
+export type LoginDTO = z.infer<typeof LoginSchema>;
 
 export const RegisterSchema = z.object({
-    id:z.string().optional(),
-    email:z.string().email(),
-    username:z.string().min(2),
-    password:z.string().min(6)
-   
-})
+  id: z.string().optional(),
+  email: z.string().email(),
+  username: z.string().min(2),
+  password: z.string().min(6),
+});
 
-export type RegisterDTO = z.infer<typeof RegisterSchema>
+export type RegisterDTO = z.infer<typeof RegisterSchema>;
 
 export const DeleteSchema = z.object({
-    id:z.string().uuid()
-})
-export type DeleteDTO = z.infer<typeof DeleteSchema>
+  id: z.string().uuid(),
+});
+export type DeleteDTO = z.infer<typeof DeleteSchema>;

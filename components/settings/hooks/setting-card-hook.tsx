@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { api } from "@/lib/api";
 import { ProjectDTO, ProjectSchema } from "@/schema/project-schema";
@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 export default function UseEditProject() {
-    const {id} = useParams()
+  const { id } = useParams();
   const { data: project } = useQuery<ProjectDTO>({
     queryKey: ["project-id"],
     queryFn: async () => {
@@ -19,33 +19,32 @@ export default function UseEditProject() {
 
       return res.data;
     },
-});
+  });
   const {
     reset,
     register,
     handleSubmit,
     formState: { errors },
-} = useForm<ProjectDTO>({
+  } = useForm<ProjectDTO>({
     mode: "onChange",
     resolver: zodResolver(ProjectSchema),
-});
+  });
 
   useEffect(() => {
-      if (project) {
-          reset( {
-            name: project.name,
-                  description: project.description,});
-        }
-    }, [project, reset]);
+    if (project) {
+      reset({
+        name: project.name,
+        description: project.description,
+      });
+    }
+  }, [project, reset]);
 
-    
   const queryClient = useQueryClient();
 
   const { mutateAsync, isPending } = useMutation<any, Error, ProjectDTO>({
     mutationKey: ["edit-project"],
     mutationFn: async (data: ProjectDTO) => {
-    
-    console.log(project?.id,"ini")
+      console.log(project?.id, "ini");
       const res = await api.patch(`/project/${project?.id}`, data);
       return res.data;
     },
@@ -60,15 +59,12 @@ export default function UseEditProject() {
         queryKey: ["dashboard"],
       });
       toast.success(data.message);
-
     },
   });
 
-  
   const onSubmit = async (data: ProjectDTO) => {
     await mutateAsync(data);
   };
-  
 
   return {
     register,

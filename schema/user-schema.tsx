@@ -13,9 +13,7 @@ export const MemberSchemaDTO = z.object({
   user: MemberUserSchema,
 });
 
-
-
-export type MemberDTO = z.infer<typeof MemberSchemaDTO>
+export type MemberDTO = z.infer<typeof MemberSchemaDTO>;
 
 export const MemberSchemaDTO2 = z.object({
   id: z.string().uuid(),
@@ -23,11 +21,9 @@ export const MemberSchemaDTO2 = z.object({
   email: z.string().email(),
 });
 
-
-
-export type MemberDTO2 = z.infer<typeof MemberSchemaDTO2>
+export type MemberDTO2 = z.infer<typeof MemberSchemaDTO2>;
 
 export const addMemberSchema = z.object({
-    userId:z.string().uuid()
-})
-export type addMemberDTO = z.infer<typeof addMemberSchema>
+  userId: z.string().uuid(),
+});
+export type addMemberDTO = z.infer<typeof addMemberSchema>;

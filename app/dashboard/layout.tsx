@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/utils/app-sidebar";
@@ -7,19 +7,14 @@ import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { useEffect } from "react";
 import Spinner from "@/components/ui/spinner";
-import Cookies from 'js-cookie';
-
-
-
+import Cookies from "js-cookie";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-
-   const { isFetched, isError } = useQuery({
+  const { isFetched, isError } = useQuery({
     queryKey: ["check"],
     queryFn: async () => {
       Cookies.get("token");
@@ -36,18 +31,16 @@ export default function RootLayout({
   }, [isError]);
 
   if (!isFetched || isError) {
-    return <Spinner/>;
+    return <Spinner />;
   }
 
-
   return (
-    
     <SidebarProvider defaultOpen={false}>
-   <AppSidebar/>
+      <AppSidebar />
       <main className="w-full" suppressHydrationWarning>
-        <SidebarTrigger/>
+        <SidebarTrigger />
         {children}
       </main>
-    </SidebarProvider>   
+    </SidebarProvider>
   );
 }

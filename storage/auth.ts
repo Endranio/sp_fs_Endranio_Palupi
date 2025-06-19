@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
-import { RegisterDTO } from '@/schema/auth-schema';
+import { create } from "zustand";
+import { devtools, persist } from "zustand/middleware";
+import { RegisterDTO } from "@/schema/auth-schema";
 
 type useAuthStore = {
   user: RegisterDTO;
@@ -18,9 +18,9 @@ export const useAuthStore = create<useAuthStore>()(
         logout: () => set(() => ({ user: {} as RegisterDTO })),
       }),
       {
-        name: 'token',
+        name: "token",
         partialize: (state) => ({ user: state.user }),
-      }
-    )
-  )
+      },
+    ),
+  ),
 );
