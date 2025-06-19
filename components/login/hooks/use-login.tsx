@@ -31,7 +31,6 @@ export default function UseLogin(){
     mutationFn: async (data: LoginDTO) => {
       
       const res = await api.post("/auth/login", data);
-      console.log(res.data.token)
       Cookies.set("token", res.data.data.token, {
         expires: 1,
       });

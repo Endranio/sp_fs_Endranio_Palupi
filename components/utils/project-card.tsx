@@ -12,7 +12,7 @@ return(
         <p>{projects.description}</p>
 
         <div className="flex gap-3">
-            <Button>View Board</Button>
+            <Button> <Link href={`projects/${projects.id}`}>Veiw Project</Link></Button>
             <Button variant={"outline"} ><Link href={`projects/${projects.id}/settings`}>Setting</Link></Button>
         </div>
     </div>

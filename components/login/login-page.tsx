@@ -14,7 +14,7 @@ export default function LoginPage(){
 
     return(
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
-          <div className="bg-gray-950 p-10 rounded-xl">
+          <div className="dark:bg-gray-950 bg-gray-150 shadow-xl p-10 rounded-xl">
 
             <form onSubmit={onSubmit} className="flex flex-col w-[350px] gap-5 mb-2">
               <div>
@@ -28,7 +28,7 @@ export default function LoginPage(){
           id="email"
           type="text"
           placeholder="Email"
-          className="pl-10"
+          className="pl-10 shadow-sm"
           {...register("email")}
         />
         <p className="text-red-500 text-sm">{errors.email?.message}</p>
@@ -39,7 +39,7 @@ export default function LoginPage(){
           id="password"
           type="password"
           placeholder="Password"
-          className="pl-10"
+          className="pl-10 shadow-sm"
           {...register("password")}
           />
         <p className="text-red-500 text-sm">{errors.password?.message}</p>
@@ -48,7 +48,7 @@ export default function LoginPage(){
 {isPending ? <Spinner /> : "Login"}      
 </Button>
     </form>
-    <p>Don't have an account? <Link href="/register">Register</Link></p>
+    <p>Don't have an account? <Link className="text-blue-800" href="/register">Register</Link></p>
           </div>
         </div>
     )

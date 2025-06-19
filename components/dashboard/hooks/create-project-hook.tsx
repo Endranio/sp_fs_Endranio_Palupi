@@ -9,9 +9,9 @@ import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-export default function UseAddProject(){
- const closeRef = useRef<HTMLButtonElement>(null);
-    const {user} = useAuthStore()
+export default function UseAddProject() {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const { user } = useAuthStore();
   const {
     handleSubmit,
     register,
@@ -22,13 +22,10 @@ export default function UseAddProject(){
     resolver: zodResolver(ProjectSchema),
   });
 
- 
   const queryClient = useQueryClient();
   const { mutateAsync, isPending } = useMutation<any, Error, ProjectDTO>({
     mutationKey: ["add-project"],
     mutationFn: async (data: ProjectDTO) => {
-      
-
       const response = await api.post(`/project/${user.id}`, data);
       return response.data;
     },
@@ -43,7 +40,7 @@ export default function UseAddProject(){
       await queryClient.invalidateQueries({
         queryKey: ["dashboard"],
       });
-    
+
       toast.success(data.message);
       closeRef.current?.click();
       reset();
@@ -51,17 +48,15 @@ export default function UseAddProject(){
   });
 
   const onSubmit = async (data: ProjectDTO) => {
-    
     await mutateAsync(data);
-
   };
 
-  return{
+  return {
     handleSubmit,
     onSubmit,
     errors,
     register,
     isPending,
-    closeRef
-  }
+    closeRef,
+  };
 }

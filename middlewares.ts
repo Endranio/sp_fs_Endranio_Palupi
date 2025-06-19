@@ -2,7 +2,7 @@ import { NextRequest,NextResponse } from "next/server";
 
 export default function middleware(req:NextRequest){
     const token = req.cookies.get("token")?.value
-
+console.log("Middleware jalan — path:", req.nextUrl.pathname, "token:", token);
     if(token && req.nextUrl.pathname.startsWith("/login")){
         return NextResponse.redirect(new URL("/dashboard",req.url))
     }
@@ -14,5 +14,5 @@ export default function middleware(req:NextRequest){
 }
 
 export const config = {
-    matcher:["/login","/dashboard","/dashboard/:path"]
+    matcher:["/login","/dashboard","/dashboard"]
 }

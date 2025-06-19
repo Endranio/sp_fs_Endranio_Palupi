@@ -6,19 +6,17 @@ import { Trash2 } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { AlertDelete } from "../utils/alert-dialog";
 import UseEditProject from "./hooks/setting-card-hook";
+import AvatarCard from "../utils/avatar";
 
 export default function UserProject(userProject:MemberDTO){
-    const initial = userProject.user.username.charAt(0).toUpperCase();
+    
     const {project} = UseEditProject()
     return(
         <div>
             <div className="flex justify-between items-center">
 <div className="flex gap-3">
 
-           <Avatar className="h-12 w-12">
-  
-  <AvatarFallback>{initial}</AvatarFallback>
-</Avatar>
+          <AvatarCard name={userProject.user.username}/>
 <div>
     <p>{userProject.user.username}</p>
     <p>{userProject.user.email}</p>
