@@ -2,13 +2,18 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 
 interface AvatarProps {
   name: string;
+  fullname?: string;
+  size: string;
 }
-export default function AvatarCard({ name }: AvatarProps) {
+export default function AvatarCard({ size, name, fullname }: AvatarProps) {
   const initial = name.charAt(0).toUpperCase();
 
   return (
-    <Avatar className="h-12 w-12">
-      <AvatarFallback>{initial}</AvatarFallback>
-    </Avatar>
+    <div className="flex gap-3 items-center">
+      <Avatar className={size}>
+        <AvatarFallback>{initial}</AvatarFallback>
+      </Avatar>
+      <p>{fullname}</p>
+    </div>
   );
 }

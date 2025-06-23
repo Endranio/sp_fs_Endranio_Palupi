@@ -1,7 +1,6 @@
 "use client";
 
 import { api } from "@/lib/api";
-import { DeleteDTO, DeleteSchema } from "@/schema/auth-schema";
 import { addMemberDTO, addMemberSchema } from "@/schema/user-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -14,20 +13,20 @@ import { toast } from "sonner";
 export default function UseMember() {
   const { id } = useParams();
   const closeRef = useRef<HTMLButtonElement>(null);
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["member"],
     queryFn: async () => {
       const res = await api.get(`/member/exist/${id}`);
-
+      console.log(res.data, "ini");
       return res.data;
     },
   });
 
   const { data: available } = useQuery({
-    queryKey: ["add-member"],
+    queryKey: ["available-member"],
     queryFn: async () => {
       const res = await api.get(`/member/${id}`);
-      console.log(res.data, "data");
+
       return res.data;
     },
   });
@@ -61,6 +60,10 @@ export default function UseMember() {
         queryKey: ["member"],
       });
 
+      await queryClient.invalidateQueries({
+        queryKey: ["available-member"],
+      });
+
       toast.success(data.message);
       closeRef.current?.click();
       reset();
@@ -73,6 +76,7 @@ export default function UseMember() {
 
   return {
     data,
+    isLoading,
     available,
     control,
     handleSubmit,

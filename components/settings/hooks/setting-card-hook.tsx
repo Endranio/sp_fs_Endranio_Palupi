@@ -12,10 +12,10 @@ import { toast } from "sonner";
 
 export default function UseEditProject() {
   const { id } = useParams();
-  const { data: project } = useQuery<ProjectDTO>({
+  const { data: project, isLoading } = useQuery<ProjectDTO>({
     queryKey: ["project-id"],
     queryFn: async () => {
-      const res = await api.get(`/project/id/${id}`);
+      const res = await api.get(`/project/detail/${id}`);
 
       return res.data;
     },
@@ -73,5 +73,6 @@ export default function UseEditProject() {
     isPending,
     onSubmit,
     project,
+    isLoading,
   };
 }

@@ -15,16 +15,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ReactNode } from "react";
 import { Textarea } from "../ui/textarea";
-import UseAddProject from "./hooks/create-project-hook";
+
 import Spinner from "../ui/spinner";
+import UseAddTask from "./hooks/task-hooks";
+import { Controller } from "react-hook-form";
+
+import { SelectScrollable } from "./select-member";
 
 interface CreateProjectProps {
   trigger: ReactNode;
 }
 
-export function CreateProject({ trigger }: CreateProjectProps) {
-  const { errors, handleSubmit, isPending, onSubmit, register, closeRef } =
-    UseAddProject();
+export function CreateTask({ trigger }: CreateProjectProps) {
+  const {
+    closeRef,
+    errors,
+    isPending,
+    register,
+    control,
+    handleSubmit,
+    onSubmit,
+  } = UseAddTask();
 
   return (
     <Dialog>
@@ -32,16 +43,16 @@ export function CreateProject({ trigger }: CreateProjectProps) {
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogHeader>
-            <DialogTitle>Create Project</DialogTitle>
+            <DialogTitle>Create New Task</DialogTitle>
             <DialogDescription>
-              Create a new project to start organizing your tasks.
+              Add a new task to the project board
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4">
-            <div className="grid gap-3 mt-4">
-              <Label htmlFor="name-1">Name</Label>
-              <Input id="name-1" {...register("name")} />
-              <p className="text-red-500 text-sm">{errors.name?.message}</p>
+          <div className="grid gap-4 mt-3">
+            <div className="grid gap-3">
+              <Label htmlFor="title-1">Title</Label>
+              <Input id="title-1" {...register("title")} />
+              <p className="text-red-500 text-sm">{errors.title?.message}</p>
             </div>
             <div className="grid gap-3">
               <Label htmlFor="description">Description</Label>
@@ -50,8 +61,14 @@ export function CreateProject({ trigger }: CreateProjectProps) {
                 {errors.description?.message}
               </p>
             </div>
+
+            <Controller
+              name="assignedId"
+              control={control}
+              render={({ field }) => <SelectScrollable field={field} />}
+            />
           </div>
-          <DialogFooter>
+          <DialogFooter className="mt-3">
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>

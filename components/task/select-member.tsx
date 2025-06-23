@@ -9,16 +9,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { MemberDTO2 } from "@/schema/user-schema";
+import { MemberDTO } from "@/schema/user-schema";
 import { ControllerRenderProps } from "react-hook-form";
-import UseMember from "./hooks/member-hook";
+import UseMember from "../settings/hooks/member-hook";
 
 interface SelectScrollableProps {
   field: ControllerRenderProps<any, any>;
 }
 
 export function SelectScrollable({ field }: SelectScrollableProps) {
-  const { available } = UseMember();
+  const { data } = UseMember();
+
+  if (data === undefined) {
+    return "Loading ...";
+  }
 
   return (
     <Select onValueChange={field.onChange} value={field.value}>
@@ -27,9 +31,9 @@ export function SelectScrollable({ field }: SelectScrollableProps) {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          {available.map((data: MemberDTO2) => (
+          {data.map((data: MemberDTO) => (
             <div key={data.id}>
-              <SelectItem value={data.id}>{data.username}</SelectItem>
+              <SelectItem value={data.userId}>{data.user.username}</SelectItem>
             </div>
           ))}
         </SelectGroup>

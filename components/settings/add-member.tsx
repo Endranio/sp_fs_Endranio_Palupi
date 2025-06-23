@@ -11,23 +11,27 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { ReactNode } from "react";
-import { Textarea } from "../ui/textarea";
 
-import Spinner from "../ui/spinner";
-import { SelectScrollable } from "./select-member";
 import { Controller } from "react-hook-form";
+import Spinner from "../ui/spinner";
 import UseMember from "./hooks/member-hook";
+import { SelectScrollable } from "./select-member";
 
 interface CreateProjectProps {
   trigger: ReactNode;
 }
 
 export function InviteMember({ trigger }: CreateProjectProps) {
-  const { control, handleSubmit, onSubmit, errors, closeRef, isPending } =
-    UseMember();
+  const {
+    control,
+    handleSubmit,
+    onSubmit,
+    errors,
+    closeRef,
+    isPending,
+    available,
+  } = UseMember();
 
   return (
     <Dialog>

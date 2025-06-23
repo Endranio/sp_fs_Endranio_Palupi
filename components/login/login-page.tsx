@@ -30,11 +30,11 @@ export default function LoginPage() {
             <Input
               id="email"
               type="text"
-              placeholder="Email"
+              placeholder="Email/Username"
               className="pl-10 shadow-sm"
-              {...register("email")}
+              {...register("identity")}
             />
-            <p className="text-red-500 text-sm">{errors.email?.message}</p>
+            <p className="text-red-500 text-sm">{errors.identity?.message}</p>
           </div>
           <div className="relative">
             <Lock color="#616161" className="absolute left-2 top-1.5" />

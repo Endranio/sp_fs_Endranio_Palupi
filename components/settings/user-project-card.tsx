@@ -14,7 +14,7 @@ export default function UserProject(userProject: MemberDTO) {
     <div>
       <div className="flex justify-between items-center">
         <div className="flex gap-3">
-          <AvatarCard name={userProject.user.username} />
+          <AvatarCard size="w-12 h-12" name={userProject.user.username} />
           <div>
             <p>{userProject.user.username}</p>
             <p>{userProject.user.email}</p>

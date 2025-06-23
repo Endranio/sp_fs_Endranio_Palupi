@@ -2,11 +2,10 @@
 
 import { ProjectDTO } from "@/schema/project-schema";
 import { Button } from "../ui/button";
+import Spinner from "../ui/spinner";
 import ProjectCard from "../utils/project-card";
 import { CreateProject } from "./create-project";
 import UseGetProject from "./hooks/dashboard-hook";
-import Spinner from "../ui/spinner";
-import Link from "next/link";
 
 export default function DashboardPage() {
   const { data, isPending } = UseGetProject();
