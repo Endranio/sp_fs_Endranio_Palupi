@@ -8,25 +8,34 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { TaskDTO } from "@/schema/task-schema";
 import { Ellipsis } from "lucide-react";
-import { useState } from "react";
+import { EditTask } from "../task/edit-task";
 import { AlertDelete } from "./alert-dialog";
 
 export function Dropdown(tasks: TaskDTO) {
-  const [open, setOpen] = useState(false);
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Ellipsis />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-36">
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <EditTask
+          task={tasks}
+          trigger={
+            <DropdownMenuItem
+              onSelect={(e) => {
+                e.preventDefault();
+              }}
+            >
+              Edit
+            </DropdownMenuItem>
+          }
+        />
+
         <AlertDelete
           trigger={
             <DropdownMenuItem
               onSelect={(e) => {
                 e.preventDefault();
-                setOpen(true);
               }}
               className="text-red-500"
             >

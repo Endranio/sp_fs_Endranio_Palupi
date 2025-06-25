@@ -2,6 +2,7 @@ import { ProjectDTO } from "@/schema/project-schema";
 import { Button } from "../ui/button";
 import { CreateTask } from "./create-task";
 import ContainerTask from "./task-container";
+import UseAddTask from "./hooks/task-hooks";
 
 export default function Task(project: ProjectDTO) {
   return (

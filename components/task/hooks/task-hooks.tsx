@@ -11,6 +11,11 @@ import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
+interface StatusDTO {
+  id: string;
+  newStatus: string;
+}
+
 export default function UseAddTask() {
   const closeRef = useRef<HTMLButtonElement>(null);
   const { id } = useParams();
@@ -62,6 +67,20 @@ export default function UseAddTask() {
     await mutateAsync(data);
   };
 
+  const { mutateAsync: status } = useMutation<any, Error, StatusDTO>({
+    mutationKey: ["status-task"],
+    mutationFn: async ({ id, newStatus }) => {
+      const res = await api.patch("/task", { data: { id, newStatus } });
+      return res.data;
+    },
+
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["task"],
+      });
+    },
+  });
+
   return {
     handleSubmit,
     tasks,
@@ -71,5 +90,6 @@ export default function UseAddTask() {
     isPending,
     closeRef,
     control,
+    status,
   };
 }

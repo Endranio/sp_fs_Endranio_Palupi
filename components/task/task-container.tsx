@@ -1,48 +1,47 @@
 "use client";
 
 import { TaskDTO } from "@/schema/task-schema";
+import { closestCenter, DndContext, DragEndEvent } from "@dnd-kit/core";
 import UseAddTask from "./hooks/task-hooks";
-import CardTask from "./task-card";
+import TaskColumn from "./task-column";
+type ColumnId = "Todo" | "OnProgress" | "Done";
+
+const columns: { id: ColumnId; label: string }[] = [
+  { id: "Todo", label: "To Do" },
+  { id: "OnProgress", label: "In Progress" },
+  { id: "Done", label: "Done" },
+];
 
 export default function ContainerTask() {
-  const { tasks } = UseAddTask();
+  const { tasks = [], status } = UseAddTask();
 
-  if (tasks === undefined) {
-    return "Loading ...";
-  }
+  const columnData: Record<ColumnId, TaskDTO[]> = {
+    Todo: tasks.filter((task: TaskDTO) => task.status === "Todo"),
+    OnProgress: tasks.filter((task: TaskDTO) => task.status === "OnProgress"),
+    Done: tasks.filter((task: TaskDTO) => task.status === "Done"),
+  };
 
-  const Todo = tasks.filter((task: TaskDTO) => task.status === "Todo");
-  const onProgress = tasks.filter(
-    (task: TaskDTO) => task.status === "OnProgress",
-  );
-  const Done = tasks.filter((task: TaskDTO) => task.status === "Done");
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const taskId = String(event.active.id);
+    const overColumn = event.over?.id as ColumnId;
+    if (!overColumn) return;
+
+    const fromColumn = Object.keys(columnData).find((column) =>
+      columnData[column as ColumnId].some((task) => task.id === taskId),
+    );
+
+    if (fromColumn === overColumn) return;
+
+    await status({ id: taskId, newStatus: overColumn });
+  };
 
   return (
-    <div className="flex justify-between mt-5 gap-8">
-      <div className="dark:bg-gray-900 p-5 rounded-sm flex-1 min-h-[500px]">
-        <p className=" font-bold text-xl">To Do</p>
-        {Todo.map((tasks: TaskDTO) => (
-          <div key={tasks.id}>
-            <CardTask {...tasks} />
-          </div>
+    <DndContext onDragEnd={handleDragEnd}>
+      <div className="flex justify-between mt-5 mb-5 gap-8">
+        {columns.map(({ id, label }) => (
+          <TaskColumn key={id} id={id} label={label} tasks={columnData[id]} />
         ))}
       </div>
-      <div className="dark:bg-gray-800 p-5 rounded-sm flex-1 min-h-[500px]">
-        <p className=" font-bold text-xl">In Progress</p>
-        {onProgress.map((tasks: TaskDTO) => (
-          <div key={tasks.id}>
-            <CardTask {...tasks} />
-          </div>
-        ))}
-      </div>
-      <div className="dark:bg-green-900 p-5 rounded-sm flex-1 min-h-[500px]">
-        <p className=" font-bold text-xl">Done</p>
-        {Done.map((tasks: TaskDTO) => (
-          <div key={tasks.id}>
-            <CardTask {...tasks} />
-          </div>
-        ))}
-      </div>
-    </div>
+    </DndContext>
   );
 }
