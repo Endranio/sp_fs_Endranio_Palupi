@@ -9,12 +9,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { MemberDTO2 } from "@/schema/user-schema";
+import { addMemberDTO, MemberDTO2 } from "@/schema/user-schema";
 import { ControllerRenderProps } from "react-hook-form";
 import UseMember from "./hooks/member-hook";
 
 interface SelectScrollableProps {
-  field: ControllerRenderProps<any, any>;
+  field: ControllerRenderProps<addMemberDTO, "userId">;
 }
 
 export function SelectScrollable({ field }: SelectScrollableProps) {

@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { House, LogOut, Settings } from "lucide-react";
 
 import {
   Sidebar,
@@ -10,59 +10,67 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { ProjectDTO } from "@/schema/project-schema";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import UseGetProject from "../dashboard/hooks/dashboard-hook";
+import { Button } from "../ui/button";
 import { ModeToggle } from "./mode-toggle";
-
-// Menu items.
-const items = [
-  {
-    title: "Home",
-    url: "#",
-    icon: Home,
-  },
-  {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
-];
+import Cookies from "js-cookie";
 
 export function AppSidebar() {
+  const router = useRouter();
+  const logout = () => {
+    Cookies.remove("token");
+    router.push("/");
+  };
+
+  const { data } = UseGetProject();
+
+  if (data === undefined) return;
+
   return (
     <Sidebar>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Application </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <ModeToggle />
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+      <SidebarContent className="flex flex-col justify-between">
+        <div>
+          <SidebarGroup>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <ModeToggle />
+                <SidebarMenuButton asChild>
+                  <Link href="/dashboard">
+                    <House />
+                    <span>Dashboard</span>
+                  </Link>
+                </SidebarMenuButton>
+                <SidebarGroupLabel>Project </SidebarGroupLabel>
+                {data.map((project: ProjectDTO) => (
+                  <SidebarMenuItem key={project.id}>
+                    <SidebarMenuButton asChild>
+                      <div className="flex justify-between items-center">
+                        <Link href={`projects/${project.id}`}>
+                          <span>{project.name}</span>
+                        </Link>
+
+                        <Link
+                          className="flex flex-center"
+                          href={`projects/${project.id}/settings`}
+                        >
+                          <Settings className="w-4 h4" />
+                        </Link>
+                      </div>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </div>
+        <div className="flex m-5 items-center">
+          <Button onClick={logout} variant={"ghost"}>
+            Logout <LogOut />
+          </Button>
+        </div>
       </SidebarContent>
     </Sidebar>
   );

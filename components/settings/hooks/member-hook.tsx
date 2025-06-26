@@ -1,6 +1,7 @@
 "use client";
 
 import { api } from "@/lib/api";
+import { MemberMutationResponseDTO } from "@/response/response";
 import { addMemberDTO, addMemberSchema } from "@/schema/user-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -42,7 +43,11 @@ export default function UseMember() {
   });
 
   const queryClient = useQueryClient();
-  const { mutateAsync, isPending } = useMutation<any, Error, addMemberDTO>({
+  const { mutateAsync, isPending } = useMutation<
+    MemberMutationResponseDTO,
+    Error,
+    addMemberDTO
+  >({
     mutationKey: ["add-member"],
     mutationFn: async (data: addMemberDTO) => {
       const response = await api.post(`/member/${id}`, data);

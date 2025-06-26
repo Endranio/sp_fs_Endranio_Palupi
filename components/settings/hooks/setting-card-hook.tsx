@@ -1,6 +1,7 @@
 "use client";
 
 import { api } from "@/lib/api";
+import { ProjectMutationResponseDTO } from "@/response/response";
 import { ProjectDTO, ProjectSchema } from "@/schema/project-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -41,7 +42,11 @@ export default function UseEditProject() {
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync, isPending } = useMutation<any, Error, ProjectDTO>({
+  const { mutateAsync, isPending } = useMutation<
+    ProjectMutationResponseDTO,
+    Error,
+    ProjectDTO
+  >({
     mutationKey: ["edit-project"],
     mutationFn: async (data: ProjectDTO) => {
       console.log(project?.id, "ini");

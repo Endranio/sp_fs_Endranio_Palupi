@@ -2,10 +2,9 @@
 
 import { MemberDTO } from "@/schema/user-schema";
 import { Button } from "../ui/button";
-import UserProject from "./user-project-card";
-import UseEditProfile from "./hooks/setting-card-hook";
-import UseMember from "./hooks/member-hook";
 import { InviteMember } from "./add-member";
+import UseMember from "./hooks/member-hook";
+import UserProject from "./user-project-card";
 
 export default function CardMember() {
   const { data } = UseMember();

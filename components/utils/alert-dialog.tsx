@@ -20,6 +20,7 @@ import { ReactNode } from "react";
 import { toast } from "sonner";
 import Spinner from "../ui/spinner";
 import { useRouter } from "next/navigation";
+import { DeleteResponseDTO } from "@/response/response";
 
 type Delete = {
   id: string;
@@ -41,7 +42,11 @@ export function AlertDelete({
   const router = useRouter();
 
   const queryClient = useQueryClient();
-  const { mutateAsync, isPending } = useMutation<any, Error, DeleteDTO>({
+  const { mutateAsync, isPending } = useMutation<
+    DeleteResponseDTO,
+    Error,
+    DeleteDTO
+  >({
     mutationKey: ["delete"],
     mutationFn: async () => {
       const response = await api.delete(`/${url}/${id}/${id2 || ""}`);
@@ -61,9 +66,13 @@ export function AlertDelete({
         queryKey: [`${invalidate}`],
       });
 
-      {
-        navigate && router.push(`/${navigate}`);
+      if (navigate) {
+        router.push(`/${navigate}`);
       }
+
+      // {
+      //   navigate && router.push(`/${navigate}`);
+      // }
     },
   });
 

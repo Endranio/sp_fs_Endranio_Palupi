@@ -1,11 +1,12 @@
 import { api } from "@/lib/api";
+import { ProjectMutationResponseDTO } from "@/response/response";
 import { ProjectDTO, ProjectSchema } from "@/schema/project-schema";
 import { useAuthStore } from "@/storage/auth";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -23,7 +24,11 @@ export default function UseAddProject() {
   });
 
   const queryClient = useQueryClient();
-  const { mutateAsync, isPending } = useMutation<any, Error, ProjectDTO>({
+  const { mutateAsync, isPending } = useMutation<
+    ProjectMutationResponseDTO,
+    Error,
+    ProjectDTO
+  >({
     mutationKey: ["add-project"],
     mutationFn: async (data: ProjectDTO) => {
       const response = await api.post(`/project/${user.id}`, data);

@@ -23,15 +23,8 @@ interface CreateProjectProps {
 }
 
 export function InviteMember({ trigger }: CreateProjectProps) {
-  const {
-    control,
-    handleSubmit,
-    onSubmit,
-    errors,
-    closeRef,
-    isPending,
-    available,
-  } = UseMember();
+  const { control, handleSubmit, onSubmit, errors, closeRef, isPending } =
+    UseMember();
 
   return (
     <Dialog>

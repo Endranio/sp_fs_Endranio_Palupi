@@ -1,7 +1,7 @@
 "use client";
 
 import { TaskDTO } from "@/schema/task-schema";
-import { closestCenter, DndContext, DragEndEvent } from "@dnd-kit/core";
+import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import UseAddTask from "./hooks/task-hooks";
 import TaskColumn from "./task-column";
 type ColumnId = "Todo" | "OnProgress" | "Done";

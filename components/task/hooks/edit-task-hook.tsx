@@ -1,12 +1,12 @@
 import { api } from "@/lib/api";
+import { TaskMutationResponseDTO } from "@/response/response";
 import { TaskDTO, TaskSchema } from "@/schema/task-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import UseAddTask from "./task-hooks";
 import axios from "axios";
-import { toast } from "sonner";
 import { useEffect, useRef } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export default function UseEditTask({ task }: { task: TaskDTO }) {
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -37,7 +37,11 @@ export default function UseEditTask({ task }: { task: TaskDTO }) {
   const queryClient = useQueryClient();
   console.log(task.id, "initasks");
 
-  const { mutateAsync, isPending } = useMutation<any, Error, TaskDTO>({
+  const { mutateAsync, isPending } = useMutation<
+    TaskMutationResponseDTO,
+    Error,
+    TaskDTO
+  >({
     mutationKey: ["edit-task"],
     mutationFn: async (data: TaskDTO) => {
       const response = await api.patch(`/task/${task.id}`, data);
@@ -53,7 +57,8 @@ export default function UseEditTask({ task }: { task: TaskDTO }) {
       await queryClient.invalidateQueries({
         queryKey: ["task"],
       });
-      toast.success(data.message), closeRef.current?.click();
+      toast.success(data.message);
+      closeRef.current?.click();
     },
   });
 

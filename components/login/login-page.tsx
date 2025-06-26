@@ -52,7 +52,7 @@ export default function LoginPage() {
           </Button>
         </form>
         <p>
-          Don't have an account?{" "}
+          {"Don't have an account? "}
           <Link className="text-blue-800" href="/register">
             Register
           </Link>

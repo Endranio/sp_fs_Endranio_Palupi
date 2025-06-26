@@ -1,12 +1,11 @@
 import { MemberDTO } from "@/schema/user-schema";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { Trash2 } from "lucide-react";
 
 import { Badge } from "../ui/badge";
 import { AlertDelete } from "../utils/alert-dialog";
-import UseEditProject from "./hooks/setting-card-hook";
 import AvatarCard from "../utils/avatar";
+import UseEditProject from "./hooks/setting-card-hook";
 
 export default function UserProject(userProject: MemberDTO) {
   const { project } = UseEditProject();

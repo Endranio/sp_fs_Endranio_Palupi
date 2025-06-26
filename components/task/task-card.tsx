@@ -6,10 +6,10 @@ import { Dropdown } from "../utils/dropdown";
 import { useDraggable } from "@dnd-kit/core";
 
 export default function CardTask(task: TaskDTO) {
-  const id = task.id;
-  if (!id) return null;
+  const id = task.id ?? "undefined";
 
   const { setNodeRef, listeners, transform } = useDraggable({ id });
+  if (!id) return null;
 
   return (
     <div

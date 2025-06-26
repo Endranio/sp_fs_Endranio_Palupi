@@ -12,9 +12,10 @@ import {
 import { MemberDTO } from "@/schema/user-schema";
 import { ControllerRenderProps } from "react-hook-form";
 import UseMember from "../settings/hooks/member-hook";
+import { TaskDTO } from "@/schema/task-schema";
 
 interface SelectScrollableProps {
-  field: ControllerRenderProps<any, any>;
+  field: ControllerRenderProps<TaskDTO, "assignedId">;
 }
 
 export function SelectScrollable({ field }: SelectScrollableProps) {

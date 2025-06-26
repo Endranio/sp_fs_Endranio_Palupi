@@ -1,6 +1,7 @@
 "use client";
 
 import { api } from "@/lib/api";
+import { TaskMutationResponseDTO, TaskResponseDTO } from "@/response/response";
 import { TaskDTO, TaskSchema } from "@/schema/task-schema";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -40,7 +41,11 @@ export default function UseAddTask() {
   });
 
   const queryClient = useQueryClient();
-  const { mutateAsync, isPending } = useMutation<any, Error, TaskDTO>({
+  const { mutateAsync, isPending } = useMutation<
+    TaskMutationResponseDTO,
+    Error,
+    TaskDTO
+  >({
     mutationKey: ["add-task"],
     mutationFn: async (data: TaskDTO) => {
       const response = await api.post(`/task/${id}`, data);
@@ -67,7 +72,11 @@ export default function UseAddTask() {
     await mutateAsync(data);
   };
 
-  const { mutateAsync: status } = useMutation<any, Error, StatusDTO>({
+  const { mutateAsync: status } = useMutation<
+    TaskResponseDTO,
+    Error,
+    StatusDTO
+  >({
     mutationKey: ["status-task"],
     mutationFn: async ({ id, newStatus }) => {
       const res = await api.patch("/task", { data: { id, newStatus } });

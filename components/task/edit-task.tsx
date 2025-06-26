@@ -16,13 +16,12 @@ import { Label } from "@/components/ui/label";
 import { ReactNode } from "react";
 import { Textarea } from "../ui/textarea";
 
-import Spinner from "../ui/spinner";
-import UseAddTask from "./hooks/task-hooks";
 import { Controller } from "react-hook-form";
+import Spinner from "../ui/spinner";
 
-import { SelectScrollable } from "./select-member";
-import UseEditTask from "./hooks/edit-task-hook";
 import { TaskDTO } from "@/schema/task-schema";
+import UseEditTask from "./hooks/edit-task-hook";
+import { SelectScrollable } from "./select-member";
 
 interface CreateProjectProps {
   trigger: ReactNode;
@@ -74,7 +73,7 @@ export function EditTask({ trigger, task }: CreateProjectProps) {
               <Button variant="outline">Cancel</Button>
             </DialogClose>
             <Button disabled={isPending} type="submit">
-              {isPending ? <Spinner /> : "Create"}
+              {isPending ? <Spinner /> : "Save"}
             </Button>
             <DialogClose asChild>
               <Button ref={closeRef} hidden />

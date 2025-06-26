@@ -4,7 +4,7 @@ import UseEditProject from "@/components/settings/hooks/setting-card-hook";
 import Task from "@/components/task/task-page";
 
 export default function TaskPage() {
-  const { project, isPending } = UseEditProject();
+  const { project } = UseEditProject();
 
   if (project === undefined) {
     return "Loading...";
