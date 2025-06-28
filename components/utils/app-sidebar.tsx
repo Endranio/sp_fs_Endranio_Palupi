@@ -45,21 +45,22 @@ export function AppSidebar() {
                 </SidebarMenuButton>
                 <SidebarGroupLabel>Project </SidebarGroupLabel>
                 {data.map((project: ProjectDTO) => (
-                  <SidebarMenuItem key={project.id}>
+                  <SidebarMenuItem
+                    key={project.id}
+                    className="flex justify-between items-center"
+                  >
                     <SidebarMenuButton asChild>
-                      <div className="flex justify-between items-center">
-                        <Link href={`projects/${project.id}`}>
-                          <span>{project.name}</span>
-                        </Link>
-
-                        <Link
-                          className="flex flex-center"
-                          href={`projects/${project.id}/settings`}
-                        >
-                          <Settings className="w-4 h4" />
-                        </Link>
-                      </div>
+                      <Link href={`/projects/${project.id}`}>
+                        {project.name}
+                      </Link>
                     </SidebarMenuButton>
+
+                    <Link
+                      href={`/projects/${project.id}/settings`}
+                      className="ml-2 hover:text-muted-foreground"
+                    >
+                      <Settings className="w-4 h-4" />
+                    </Link>
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>
