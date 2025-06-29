@@ -25,7 +25,10 @@ export default function DashboardPage() {
       </div>
       <div className="grid md:grid-cols-3 gap-20 mt-5">
         {data?.map((project: ProjectDTO) => (
-          <div className="border rounded-xl h-full  p-4 " key={project.id}>
+          <div
+            className="border rounded-xl h-full shadow-xl p-4 "
+            key={project.id}
+          >
             <ProjectCard {...project} />
           </div>
         ))}

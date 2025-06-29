@@ -69,10 +69,6 @@ export function AlertDelete({
       if (navigate) {
         router.push(`/${navigate}`);
       }
-
-      // {
-      //   navigate && router.push(`/${navigate}`);
-      // }
     },
   });
 
