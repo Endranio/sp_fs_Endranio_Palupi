@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
+import Navbar from "./navbar";
 
 export default function LandingPage() {
   const router = useRouter();

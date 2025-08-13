@@ -1,3 +1,41 @@
+import Link from "next/link";
+import { Button } from "../ui/button";
+
 export default function Navbar() {
-  return <div></div>;
+  return (
+    <nav className=" sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-2 px-4">
+      <div className=" flex h-16 items-center justify-between w-full">
+        <div className="flex items-center space-x-4">
+          <Link href="/" className="flex items-center space-x-2">
+            <div className="flex h-8 w-8 items-center rounded-lg bg-primary text-primary-foreground"></div>
+            <span className="text-xl font-bold">ProjectFlow</span>
+          </Link>
+        </div>
+
+        <div className="hidden md:flex items-center space-x-6">
+          <Link
+            href="#features"
+            className="text-lg font-medium hover:text-primary transition-colors"
+          >
+            Features
+          </Link>
+          <Link
+            href="#benefits"
+            className="text-lg font-medium hover:text-primary transition-colors"
+          >
+            Benefits
+          </Link>
+
+          <div className="flex items-center space-x-2">
+            <Button className="text-lg" variant="ghost" asChild>
+              <Link href="/login">Sign In</Link>
+            </Button>
+            <Button className="text-lg" asChild>
+              <Link href="/register">Get Started</Link>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
 }
