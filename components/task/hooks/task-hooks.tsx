@@ -1,7 +1,7 @@
 "use client";
 
 import { api } from "@/lib/api";
-import { TaskMutationResponseDTO, TaskResponseDTO } from "@/response/response";
+import { TaskMutationResponseDTO } from "@/response/response";
 import { TaskDTO, TaskSchema } from "@/schema/task-schema";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,11 +31,10 @@ export default function UseAddTask() {
     resolver: zodResolver(TaskSchema),
   });
 
-  const { data: tasks } = useQuery({
+  const { data: tasks = [] } = useQuery({
     queryKey: ["task"],
     queryFn: async () => {
       const res = await api.get(`/task/${id}`);
-      console.log(res.data, "data");
       return res.data;
     },
   });
@@ -73,18 +72,18 @@ export default function UseAddTask() {
   };
 
   const { mutateAsync: status } = useMutation<
-    TaskResponseDTO,
+    TaskDTO,
     Error,
-    StatusDTO
+    StatusDTO,
+    { previousTasks?: TaskDTO[] }
   >({
     mutationKey: ["status-task"],
     mutationFn: async ({ id, newStatus }) => {
       const res = await api.patch("/task", { data: { id, newStatus } });
       return res.data;
     },
-
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
         queryKey: ["task"],
       });
     },

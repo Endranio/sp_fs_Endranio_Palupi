@@ -49,7 +49,6 @@ export default function UseEditProject() {
   >({
     mutationKey: ["edit-project"],
     mutationFn: async (data: ProjectDTO) => {
-      console.log(project?.id, "ini");
       const res = await api.patch(`/project/${project?.id}`, data);
       return res.data;
     },

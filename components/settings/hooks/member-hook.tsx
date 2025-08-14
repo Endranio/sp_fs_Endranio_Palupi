@@ -18,7 +18,7 @@ export default function UseMember() {
     queryKey: ["member"],
     queryFn: async () => {
       const res = await api.get(`/member/exist/${id}`);
-      console.log(res.data, "ini");
+
       return res.data;
     },
   });

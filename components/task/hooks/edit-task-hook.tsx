@@ -22,8 +22,6 @@ export default function UseEditTask({ task }: { task: TaskDTO }) {
     resolver: zodResolver(TaskSchema),
   });
 
-  console.log(task, "tasks");
-
   useEffect(() => {
     if (task) {
       reset({
@@ -35,7 +33,6 @@ export default function UseEditTask({ task }: { task: TaskDTO }) {
   }, [task, reset]);
 
   const queryClient = useQueryClient();
-  console.log(task.id, "initasks");
 
   const { mutateAsync, isPending } = useMutation<
     TaskMutationResponseDTO,

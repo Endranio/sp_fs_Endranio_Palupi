@@ -1,4 +1,4 @@
-import { BarChart3, Calendar, Globe, Shield, Users, Zap } from "lucide-react";
+import { Calendar, Shield, Users, Zap } from "lucide-react";
 import {
   Card,
   CardContent,

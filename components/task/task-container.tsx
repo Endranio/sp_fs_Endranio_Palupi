@@ -4,6 +4,7 @@ import { TaskDTO } from "@/schema/task-schema";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import UseAddTask from "./hooks/task-hooks";
 import TaskColumn from "./task-column";
+import React from "react";
 type ColumnId = "Todo" | "OnProgress" | "Done";
 
 const columns: { id: ColumnId; label: string }[] = [
@@ -14,25 +15,34 @@ const columns: { id: ColumnId; label: string }[] = [
 
 export default function ContainerTask() {
   const { tasks = [], status } = UseAddTask();
+  const [localTasks, setLocalTasks] = React.useState<TaskDTO[]>([]);
 
-  const columnData: Record<ColumnId, TaskDTO[]> = {
-    Todo: tasks.filter((task: TaskDTO) => task.status === "Todo"),
-    OnProgress: tasks.filter((task: TaskDTO) => task.status === "OnProgress"),
-    Done: tasks.filter((task: TaskDTO) => task.status === "Done"),
-  };
+  React.useEffect(() => {
+    if (localTasks.length !== tasks.length) {
+      setLocalTasks(tasks);
+    }
+  }, [tasks, localTasks.length]);
 
-  const handleDragEnd = async (event: DragEndEvent) => {
+  const handleDragEnd = (event: DragEndEvent) => {
     const taskId = String(event.active.id);
     const overColumn = event.over?.id as ColumnId;
     if (!overColumn) return;
 
-    const fromColumn = Object.keys(columnData).find((column) =>
-      columnData[column as ColumnId].some((task) => task.id === taskId),
-    );
+    setLocalTasks((prev) => {
+      return prev.map((task) =>
+        task.id === taskId ? { ...task, status: overColumn } : task,
+      );
+    });
 
-    if (fromColumn === overColumn) return;
+    status({ id: taskId, newStatus: overColumn }).catch(() => {
+      setLocalTasks(tasks);
+    });
+  };
 
-    await status({ id: taskId, newStatus: overColumn });
+  const columnData: Record<ColumnId, TaskDTO[]> = {
+    Todo: localTasks.filter((task) => task.status === "Todo"),
+    OnProgress: localTasks.filter((task) => task.status === "OnProgress"),
+    Done: localTasks.filter((task) => task.status === "Done"),
   };
 
   return (
