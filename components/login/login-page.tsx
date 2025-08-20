@@ -1,15 +1,31 @@
 "use client";
 
+import Google from "@/app/Google.png";
+import Cookies from "js-cookie";
 import { Lock, Mail } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-
-import UseLogin from "./hooks/use-login";
-import Link from "next/link";
 import Spinner from "../ui/spinner";
+import { useOAuthLogin } from "./hooks/auth-login";
+import UseLogin from "./hooks/use-login";
 
 export default function LoginPage() {
   const { errors, onSubmit, register, isPending } = UseLogin();
+  const { loginWithGoogle } = useOAuthLogin();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+
+    if (token) {
+      router.replace("/dashboard");
+    }
+  }, [router]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4">
@@ -49,6 +65,10 @@ export default function LoginPage() {
           </div>
           <Button disabled={isPending} type="submit">
             {isPending ? <Spinner /> : "Login"}
+          </Button>
+          <Button onClick={loginWithGoogle} type="button">
+            <Image src={Google} alt="Google" className="w-6 h-6 mr-2" />
+            Login With Google
           </Button>
         </form>
         <p>

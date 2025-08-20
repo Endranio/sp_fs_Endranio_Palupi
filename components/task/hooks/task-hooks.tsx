@@ -31,7 +31,7 @@ export default function UseAddTask() {
     resolver: zodResolver(TaskSchema),
   });
 
-  const { data: tasks = [] } = useQuery({
+  const { data: tasks = [], isLoading } = useQuery({
     queryKey: ["task"],
     queryFn: async () => {
       const res = await api.get(`/task/${id}`);
@@ -96,6 +96,7 @@ export default function UseAddTask() {
     errors,
     register,
     isPending,
+    isLoading,
     closeRef,
     control,
     status,

@@ -1,27 +1,19 @@
 "use client";
 
+import "@/app/globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/utils/app-sidebar";
-import "@/app/globals.css";
+import LoadingWrapper from "@/components/utils/lottie/loading-light";
+import { useAuthCheck } from "@/lib/check";
 import Cookies from "js-cookie";
-import Spinner from "@/components/ui/spinner";
 import { useEffect } from "react";
-import { api } from "@/lib/api";
-import { useQuery } from "@tanstack/react-query";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { isFetched, isError } = useQuery({
-    queryKey: ["check"],
-    queryFn: async () => {
-      Cookies.get("token");
-      const res = await api.post("/auth/check");
-      return res.data;
-    },
-  });
+  const { isError, isFetched } = useAuthCheck();
 
   useEffect(() => {
     if (isError) {
@@ -31,7 +23,7 @@ export default function RootLayout({
   }, [isError]);
 
   if (!isFetched || isError) {
-    return <Spinner />;
+    return <LoadingWrapper />;
   }
 
   return (

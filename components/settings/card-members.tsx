@@ -5,12 +5,15 @@ import { Button } from "../ui/button";
 import { InviteMember } from "./add-member";
 import UseMember from "./hooks/member-hook";
 import UserProject from "./user-project-card";
+import { SkeletonMemberCard } from "../utils/skeleton/skeleton-member";
+import { SkeletonTask } from "../utils/skeleton/skeleton-task";
+import { Skeleton } from "../ui/skeleton";
 
 export default function CardMember() {
   const { data } = UseMember();
 
   if (!data) {
-    return "Loading...";
+    return <Skeleton className="mt-5 border p-4 rounded-xl h-20" />;
   }
 
   return (

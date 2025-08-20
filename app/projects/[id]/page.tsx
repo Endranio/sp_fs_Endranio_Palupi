@@ -7,7 +7,7 @@ export default function TaskPage() {
   const { project } = UseEditProject();
 
   if (project === undefined) {
-    return "Loading...";
+    return;
   }
 
   return (

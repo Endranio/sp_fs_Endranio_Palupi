@@ -11,7 +11,7 @@ export const RegisterSchema = z.object({
   id: z.string().optional(),
   email: z.string().email(),
   username: z.string().min(2),
-  password: z.string().min(6),
+  password: z.string().min(6).optional(),
 });
 
 export type RegisterDTO = z.infer<typeof RegisterSchema>;

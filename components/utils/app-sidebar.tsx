@@ -17,10 +17,12 @@ import UseGetProject from "../dashboard/hooks/dashboard-hook";
 import { Button } from "../ui/button";
 import { ModeToggle } from "./mode-toggle";
 import Cookies from "js-cookie";
+import { signOut } from "next-auth/react";
 
 export function AppSidebar() {
   const router = useRouter();
   const logout = () => {
+    signOut({ callbackUrl: "/" });
     Cookies.remove("token");
     router.push("/");
   };

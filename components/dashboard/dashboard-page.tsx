@@ -2,7 +2,7 @@
 
 import { ProjectDTO } from "@/schema/project-schema";
 import { Button } from "../ui/button";
-import Spinner from "../ui/spinner";
+import LoadingWrapper from "../utils/lottie/loading-light";
 import ProjectCard from "../utils/project-card";
 import { CreateProject } from "./create-project";
 import UseGetProject from "./hooks/dashboard-hook";
@@ -11,7 +11,7 @@ export default function DashboardPage() {
   const { data, isPending } = UseGetProject();
 
   if (isPending) {
-    <Spinner />;
+    return <LoadingWrapper />;
   }
 
   return (
@@ -21,6 +21,7 @@ export default function DashboardPage() {
           <p className="text-4xl font-bold">Dashboard</p>
           <p className="">Manage your projects and track progress</p>
         </div>
+
         <CreateProject trigger={<Button>+ New Project</Button>} />
       </div>
       <div className="grid md:grid-cols-3 gap-20 mt-5">

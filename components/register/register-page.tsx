@@ -5,8 +5,8 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
 import Link from "next/link";
-import UseRegister from "./hooks/use-register";
 import Spinner from "../ui/spinner";
+import UseRegister from "./hooks/use-register";
 
 export default function RegisterPage() {
   const { errors, onSubmit, register, isPending } = UseRegister();
