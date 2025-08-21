@@ -2,12 +2,10 @@
 
 import { MemberDTO } from "@/schema/user-schema";
 import { Button } from "../ui/button";
+import { Skeleton } from "../ui/skeleton";
 import { InviteMember } from "./add-member";
 import UseMember from "./hooks/member-hook";
 import UserProject from "./user-project-card";
-import { SkeletonMemberCard } from "../utils/skeleton/skeleton-member";
-import { SkeletonTask } from "../utils/skeleton/skeleton-task";
-import { Skeleton } from "../ui/skeleton";
 
 export default function CardMember() {
   const { data } = UseMember();

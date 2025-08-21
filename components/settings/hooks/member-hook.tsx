@@ -11,7 +11,7 @@ import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-export default function UseMember() {
+export default function UseMember(search?: string) {
   const { id } = useParams();
   const closeRef = useRef<HTMLButtonElement>(null);
   const { data, isLoading } = useQuery({
@@ -23,10 +23,10 @@ export default function UseMember() {
     },
   });
 
-  const { data: available } = useQuery({
+  const { data: available, refetch } = useQuery({
     queryKey: ["available-member"],
     queryFn: async () => {
-      const res = await api.get(`/member/${id}`);
+      const res = await api.get(`/member/${id}?search=${search}`);
 
       return res.data;
     },
@@ -89,5 +89,6 @@ export default function UseMember() {
     errors,
     closeRef,
     isPending,
+    refetch,
   };
 }

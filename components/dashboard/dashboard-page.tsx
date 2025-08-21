@@ -6,6 +6,7 @@ import LoadingWrapper from "../utils/lottie/loading-light";
 import ProjectCard from "../utils/project-card";
 import { CreateProject } from "./create-project";
 import UseGetProject from "./hooks/dashboard-hook";
+import { Plus } from "lucide-react";
 
 export default function DashboardPage() {
   const { data, isPending } = UseGetProject();
@@ -15,23 +16,30 @@ export default function DashboardPage() {
   }
 
   return (
-    <div>
-      <div className="w-full flex justify-between ">
+    <div className="p-6 space-y-8">
+      {/* Header */}
+      <div className="flex items-center justify-between">
         <div>
-          <p className="text-4xl font-bold">Dashboard</p>
-          <p className="">Manage your projects and track progress</p>
+          <h1 className="text-4xl font-bold tracking-tight">Dashboard</h1>
+          <p className="text-muted-foreground">
+            Manage your projects and track progress easily
+          </p>
         </div>
 
-        <CreateProject trigger={<Button>+ New Project</Button>} />
+        <CreateProject
+          trigger={
+            <Button className="flex items-center gap-2">
+              <Plus className="h-4 w-4" />
+              New Project
+            </Button>
+          }
+        />
       </div>
-      <div className="grid md:grid-cols-3 gap-20 mt-5">
+
+      {/* Projects */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {data?.map((project: ProjectDTO) => (
-          <div
-            className="border rounded-xl h-full shadow-xl p-4 "
-            key={project.id}
-          >
-            <ProjectCard {...project} />
-          </div>
+          <ProjectCard key={project.id} {...project} />
         ))}
       </div>
     </div>
