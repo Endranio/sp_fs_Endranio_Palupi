@@ -29,6 +29,7 @@ export default function RootLayout({
 
   return (
     <SidebarProvider defaultOpen={false}>
+      <AppSidebar />
       <main className="w-full" suppressHydrationWarning>
         <div className="flex items-center ml-3 gap-3">
           <SidebarTrigger />

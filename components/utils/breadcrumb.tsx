@@ -15,7 +15,7 @@ import UseEditProject from "../settings/hooks/setting-card-hook";
 export function BreadcrumbNavbar() {
   const pathname = usePathname();
   const pathSegments = pathname.split("/").filter(Boolean);
-
+  const { project, isLoading } = UseEditProject();
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -30,7 +30,7 @@ export function BreadcrumbNavbar() {
 
           const href = "/" + pathSegments.slice(0, index + 1).join("/");
           const isLast = index === pathSegments.length - 1;
-          const { project, isLoading } = UseEditProject();
+
           const label =
             project && segment === project.id ? project.name : segment;
           return (
