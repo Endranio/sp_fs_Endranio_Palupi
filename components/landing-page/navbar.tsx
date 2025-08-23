@@ -1,5 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "../ui/button";
+
+export const scroll = (page: string) => {
+  const section = document.getElementById(page);
+  section?.scrollIntoView({ behavior: "smooth" });
+};
 
 export default function Navbar() {
   return (
@@ -13,19 +20,21 @@ export default function Navbar() {
         </div>
 
         <div className="hidden md:flex items-center space-x-6">
-          <Link
-            href="#features"
-            className="text-lg font-medium hover:text-primary transition-colors"
+          <Button
+            variant="ghost"
+            onClick={() => scroll("features")}
+            className="text-lg font-medium hover:!bg-transparent transition-colors p-0"
           >
             Features
-          </Link>
-          <Link
-            href="#benefits"
-            className="text-lg font-medium hover:text-primary transition-colors"
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => scroll("benefits")}
+            className="text-lg font-medium hover:!bg-transparent transition-colors p-0"
           >
             Benefits
-          </Link>
-
+          </Button>
+          Button
           <div className="flex items-center space-x-2">
             <Button className="text-lg" variant="ghost" asChild>
               <Link href="/login">Sign In</Link>

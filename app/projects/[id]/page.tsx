@@ -2,12 +2,13 @@
 
 import UseEditProject from "@/components/settings/hooks/setting-card-hook";
 import Task from "@/components/task/task-page";
+import LoadingWrapper from "@/components/utils/lottie/loading-light";
 
 export default function TaskPage() {
   const { project } = UseEditProject();
 
-  if (project === undefined) {
-    return;
+  if (!project) {
+    return <LoadingWrapper />;
   }
 
   return (

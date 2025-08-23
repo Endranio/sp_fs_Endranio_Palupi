@@ -11,13 +11,12 @@ import { Plus } from "lucide-react";
 export default function DashboardPage() {
   const { data, isPending } = UseGetProject();
 
-  if (isPending) {
+  if (isPending || !data) {
     return <LoadingWrapper />;
   }
 
   return (
     <div className="p-6 space-y-8">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-4xl font-bold tracking-tight">Dashboard</h1>
@@ -36,7 +35,6 @@ export default function DashboardPage() {
         />
       </div>
 
-      {/* Projects */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {data?.map((project: ProjectDTO) => (
           <ProjectCard key={project.id} {...project} />

@@ -37,7 +37,7 @@ export default function Feature() {
   ];
 
   return (
-    <div className="mt-20 m-10">
+    <div id="features" className="pt-20 m-10">
       <div className="">
         <h1 className="font-bold text-5xl text-center mb-5">
           Everything you need to manage projects

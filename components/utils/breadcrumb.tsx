@@ -15,7 +15,7 @@ import UseEditProject from "../settings/hooks/setting-card-hook";
 export function BreadcrumbNavbar() {
   const pathname = usePathname();
   const pathSegments = pathname.split("/").filter(Boolean);
-  const { project, isLoading } = UseEditProject();
+  const { project } = UseEditProject();
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -39,12 +39,12 @@ export function BreadcrumbNavbar() {
               <BreadcrumbItem>
                 {isLast ? (
                   <BreadcrumbPage className="capitalize">
-                    {isLoading ? "" : label}
+                    {project && label}
                   </BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink asChild>
                     <Link href={href} className="capitalize">
-                      {isLoading ? "" : label}
+                      {project && label}
                     </Link>
                   </BreadcrumbLink>
                 )}
