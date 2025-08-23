@@ -34,7 +34,7 @@ export default function Navbar() {
           >
             Benefits
           </Button>
-          Button
+
           <div className="flex items-center space-x-2">
             <Button className="text-lg" variant="ghost" asChild>
               <Link href="/login">Sign In</Link>
