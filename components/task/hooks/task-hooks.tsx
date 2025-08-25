@@ -11,6 +11,7 @@ import { useParams } from "next/navigation";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { getSocket } from "@/lib/socket";
 
 interface StatusDTO {
   id: string;
@@ -18,6 +19,7 @@ interface StatusDTO {
 }
 
 export default function UseAddTask() {
+  const socket = getSocket();
   const closeRef = useRef<HTMLButtonElement>(null);
   const { id } = useParams();
   const {
@@ -80,6 +82,7 @@ export default function UseAddTask() {
     mutationKey: ["status-task"],
     mutationFn: async ({ id, newStatus }) => {
       const res = await api.patch("/task", { data: { id, newStatus } });
+
       return res.data;
     },
     onSuccess: () => {
@@ -87,6 +90,10 @@ export default function UseAddTask() {
         queryKey: ["task"],
       });
     },
+  });
+
+  socket.on("message", () => {
+    queryClient.invalidateQueries({ queryKey: ["task"] });
   });
 
   return {

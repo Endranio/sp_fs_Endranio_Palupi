@@ -18,10 +18,8 @@ export default function ContainerTask() {
   const [localTasks, setLocalTasks] = React.useState<TaskDTO[]>([]);
 
   React.useEffect(() => {
-    if (localTasks.length !== tasks.length) {
-      setLocalTasks(tasks);
-    }
-  }, [tasks, localTasks.length]);
+    setLocalTasks(tasks);
+  }, [tasks]);
 
   const handleDragEnd = (event: DragEndEvent) => {
     const taskId = String(event.active.id);

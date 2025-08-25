@@ -51,10 +51,10 @@ export default function UseEditTask({ task }: { task: TaskDTO }) {
       toast.error("something wrong");
     },
     onSuccess: async (data) => {
+      toast.success(data.message);
       await queryClient.invalidateQueries({
         queryKey: ["task"],
       });
-      toast.success(data.message);
       closeRef.current?.click();
     },
   });
